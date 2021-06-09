@@ -24,7 +24,6 @@
           <i class="el-icon-setting" style="margin-right: 15px"></i>
         </el-dropdown>
       </el-header>
-
       <router-view></router-view>
     </el-container>
   </el-container>

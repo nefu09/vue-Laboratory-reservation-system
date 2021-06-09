@@ -24,6 +24,7 @@
             v-for="a in avialablelaboratories1"
             :value="a.id"
             :key="a.id"
+            :disabled="change"
             >{{ a.name }}</el-option
           >
         </el-select>
@@ -59,9 +60,9 @@
     </tbody>
   </table>
 
-  <div id="pop" v-if="dialogFormVisible">
+  <div id="pop" v-if="dialogFormVisible && ableschedule">
     <template v-for="c in choice1.day.weeks" :key="c.weekwhich">
-      <input
+      第{{ c.weekwhich }}周<input
         type="checkbox"
         :disabled="c.disabled"
         :value="{
@@ -75,8 +76,14 @@
         v-model="reservationuseadd"
       />
     </template>
-    <button @click="cancelreserve">取消</button>
-    <button @click="finishreserve">预约</button>
+    <div id="buttoncollection">
+      <div id="button1">
+        <el-button type="info" @click="cancelreserve">取消</el-button>
+      </div>
+      <div id="button2">
+        <el-button type="success" @click="finishreserve">预约</el-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -97,13 +104,16 @@ import { useStore } from "vuex";
 import { State } from "@/store";
 
 export default defineComponent({
-  setup() {
+  props: {
+    tid: String,
+  },
+  setup(props) {
     const router = useRouter();
     const dialogFormVisible = ref(false);
     const store = useStore<State>();
     const courses = computed(() => store.state.courses);
     const checkedcourseid = ref<string>();
-    const checkedteacherid = store.state.tid;
+    const checkedteacherid = ref(sessionStorage.getItem("tid"));
     const checkedlaboratoryid = ref<string>();
     const avialablelaboratories: Laboratory[] = [];
     const avialablelaboratories1 = ref(avialablelaboratories);
@@ -115,6 +125,8 @@ export default defineComponent({
     const reservationuseadd = ref<Reservation[]>([]);
     const selectedperiod01 = ref<number>(0);
     const selectedperiod = ref<number>(0);
+    const ableschedule=ref(false);
+    const change = ref(true);
     watch(reservationuseadd, () => {
       selectedperiod.value =
         selectedperiod01.value + reservationuseadd.value.length * 2;
@@ -125,6 +137,13 @@ export default defineComponent({
           c.disabled = true;
         });
       }
+    });
+    watch(checkedcourseid, () => {
+      change.value = true;
+      ableschedule.value = false;
+    });
+    watch(checkedlaboratoryid, () => {
+      ableschedule.value = false;
     });
     const choice: Choice = {
       // lesson: 0,
@@ -153,16 +172,7 @@ export default defineComponent({
       // },
     };
     const choice1 = ref(choice);
-    const modelreservation = ref<Reservation>({
-      teacherId: checkedteacherid,
-      courseId: checkedcourseid.value,
-      laboratoryId: checkedlaboratoryid.value,
-      week: 0,
-      day: choice1.value.day?.daywhich,
-      lesson: choice1.value.lesson,
-    });
-    const toreservations = ref<Reservation[]>([]);
-    axios.get("/selectcourse").then((resp) => {
+    axios.get(`/selectcourse/${checkedteacherid.value}`).then((resp) => {
       if (resp) {
         store.state.courses = resp.data.data.courses;
       }
@@ -1032,6 +1042,7 @@ export default defineComponent({
           period.value = resp.data.data.period;
           selectedperiod.value = resp.data.data.selectedPeriod;
           selectedperiod01.value = resp.data.data.selectedPeriod;
+          change.value = false;
         }
       });
     }
@@ -1067,6 +1078,10 @@ export default defineComponent({
       }
       dialogFormVisible.value = false;
     }
+    function choicelaboratory() {
+      dialogFormVisible.value = false;
+      ableschedule.value = true;
+    }
     return {
       schedule,
       locations1,
@@ -1085,6 +1100,9 @@ export default defineComponent({
       reservationuseadd,
       period,
       selectedperiod,
+      change,
+      choicelaboratory,
+      ableschedule,
     };
   },
 });
@@ -1120,14 +1138,23 @@ td {
 .form {
   display: inline-block;
 }
-#pop {
-  width: 200px;
-  border: 2px red solid;
-}
 span {
   font-size: 30px;
 }
 #span {
   margin-right: 100px;
+}
+
+#buttoncollection {
+  display: inline-block;
+}
+#button1 {
+  float: left;
+  margin-top: 20px;
+  margin-right: 100px;
+}
+#button2 {
+  float: left;
+  margin-top: 20px;
 }
 </style>

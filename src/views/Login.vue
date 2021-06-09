@@ -108,8 +108,9 @@ export default defineComponent({
             const token = resp.data.data.token;
             sessionStorage.setItem("token", token);
             if (resp.data.data.role == 1) {
+              sessionStorage.setItem("tid", resp.data.data.teacher);
               store.state.tid = resp.data.data.teacher;
-              router.replace("/teacher");
+              router.replace(`/teacher`);
             }
             if (resp.data.data.role == 2) {
               alert("用户名或密码错误");

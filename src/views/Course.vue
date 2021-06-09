@@ -139,7 +139,8 @@ import { State } from "@/store";
 export default defineComponent({
   setup() {
     const store = useStore<State>();
-    axios.get("/selectcourse").then((resp) => {
+    const checkedteacherid = ref(sessionStorage.getItem("tid"));
+    axios.get(`/selectcourse/${checkedteacherid.value}`).then((resp) => {
       if (resp) {
         store.state.courses = resp.data.data.courses;
       }
@@ -158,7 +159,7 @@ export default defineComponent({
     const addCourseForm = ref(course3);
     function deletecourse(data: Course) {
       axios
-        .get(`/deletecourse/${data.id}`)
+        .get(`/deletecourse/${data.id}/${checkedteacherid.value}`)
         .then((resp) => (store.state.courses = resp.data.data.courses));
     }
     function updatecourse(data: Role) {
@@ -172,7 +173,7 @@ export default defineComponent({
     function confirmupdatecourse(data: Course) {
       console.log(data);
       axios
-        .post(`/updatecourse`, data)
+        .post(`/updatecourse/${checkedteacherid.value}`, data)
         .then((resp) => (store.state.courses = resp.data.data.courses));
       dialogFormVisible01.value = false;
     }
@@ -184,7 +185,7 @@ export default defineComponent({
     }
     function confirmaddcourse(data: Course) {
       axios
-        .post(`/addcourse`, data)
+        .post(`/addcourse/${checkedteacherid.value}`, data)
         .then((resp) => (store.state.courses = resp.data.data.courses));
       dialogFormVisible02.value = false;
     }

@@ -22,7 +22,7 @@ export interface Laboratory{
 
 export interface Course{
   id?: string;
-  teacherId:String;
+  teacherId:String|null;
   name?: string;
   studentNumber?: number;
   periods?: number;
@@ -31,7 +31,7 @@ export interface Course{
 
 export interface Reservation{
   id?: string;
-  teacherId?: string;
+  teacherId?: String|null;
   courseId?: string;
   laboratoryId?: string;
   week?: number;
