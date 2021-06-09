@@ -1,6 +1,6 @@
 import { ActionTree, createStore, MutationTree } from "vuex";
 import * as vxt from "@/store/VuexTypes";
-import { Role, Course,Laboratory,reservation } from "@/datasource/Types";
+import { Role, Course,Laboratory,Reservation } from "@/datasource/Types";
 import axios from "@/axios";
 
 
@@ -8,7 +8,8 @@ export interface State{
   labs?: Laboratory[];
   roles?: Role[];
   courses?: Course[];
-  reservations?: reservation[];
+  reservations?: Reservation[];
+  tid:string;
 }
 
 const myState: State = {
@@ -16,6 +17,7 @@ const myState: State = {
   roles: [],
   courses: [],
   reservations: [],
+  tid:"",
 }
 
 const myMutations: MutationTree<State> = {

@@ -26,15 +26,18 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/teacher",
     name: "Teacher",
-    component: ()=>import("@/views/Teacher.vue")
+    component: ()=>import("@/views/Teacher.vue"),
+    children: [
+      {
+        path: "course",
+        component: () => import("@/views/Course.vue")
+      },
+      {
+        path: "reservation",
+        component: () => import("@/views/Reservation.vue"),
+      }
+    ]
   },
-  {
-    path: "/teacher",
-    name: "Teacher",
-    component: ()=>import("@/views/Teacher.vue")
-  },
-  
-  
 ];
 
 const router = createRouter({

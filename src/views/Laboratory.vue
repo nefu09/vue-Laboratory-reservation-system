@@ -1,18 +1,18 @@
 <template>
   <div>
-    <el-button @click="addlaboratory" type="text" size="small"
+    <el-button @click="addlaboratory" type="text" size="medium"
       >添加实验室
     </el-button>
     <el-table :data="laboratory1" border style="width: 100%">
-      <el-table-column fixed type="index" label="序号" width="300">
+      <el-table-column fixed type="index" label="序号" width="200">
       </el-table-column>
-      <el-table-column fixed prop="name" label="实验室名称" width="300">
+      <el-table-column fixed prop="name" label="实验室名称" width="200">
       </el-table-column>
-      <el-table-column prop="capacity" label="容量" width="300">
+      <el-table-column prop="capacity" label="容量" width="200">
       </el-table-column>
-      <el-table-column prop="description" label="描述" width="300">
+      <el-table-column prop="description" label="描述" width="200">
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="300">
+      <el-table-column fixed="right" label="操作" width="200">
         <template #default="scope">
           <el-button
             @click="updatelaboratory(scope.row)"

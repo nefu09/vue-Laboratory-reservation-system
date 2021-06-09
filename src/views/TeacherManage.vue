@@ -1,18 +1,18 @@
 <template>
   <div>
-    <el-button @click="addteacher" type="text" size="small"
+    <el-button @click="addteacher" type="text" size="medium"
       >添加教师
     </el-button>
     <el-table :data="role1" border style="width: 100%">
-      <el-table-column fixed type="index" label="序号" width="300">
+      <el-table-column fixed type="index" label="序号" width="200">
       </el-table-column>
-      <el-table-column fixed prop="name" label="姓名" width="300">
+      <el-table-column fixed prop="name" label="姓名" width="200">
       </el-table-column>
-      <el-table-column prop="userName" label="用户名" width="300">
+      <el-table-column prop="userName" label="用户名" width="200">
       </el-table-column>
-      <el-table-column prop="password" label="密码" width="300">
+      <el-table-column prop="password" label="密码" width="200">
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="300">
+      <el-table-column fixed="right" label="操作" width="200">
         <template #default="scope">
           <el-button @click="updateteacher(scope.row)" type="text" size="small"
             >编辑</el-button

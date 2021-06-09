@@ -1,4 +1,4 @@
-export interface Resule{
+export interface ResultVO{
   code?: number;
   message?: string;
   data?: object;
@@ -22,12 +22,14 @@ export interface Laboratory{
 
 export interface Course{
   id?: string;
+  teacherId:String;
   name?: string;
   studentNumber?: number;
   periods?: number;
+  teacherName?:string;
 }
 
-export interface reservation{
+export interface Reservation{
   id?: string;
   teacherId?: string;
   courseId?: string;
@@ -36,27 +38,24 @@ export interface reservation{
   day?: number;
   lesson?: number;
 }
-
-export interface Appointment{
-  id?: number;
-  uid?: number;
-  uname?: string;
-  cid?: number;
-  cname?: string;
-  labName?: string;
+ 
+export interface Location{
+  lesson?:number;
+  days?:Day[];
 }
 
-export interface CheckboxState{
-  week: number;
-  disabled: boolean;
+
+export interface Week{
+  weekwhich?: number;
+  disabled?: boolean;
 }
 
 export interface Day{
-  day: string | number;
-  checkboxs: CheckboxState[];
+  daywhich?: number;
+  weeks?: Week[];
 }
 
-export interface Section{
-  sectionId: number;
-  days: Day[];
+export interface Choice{
+  lesson?:number;
+  day?:Day; 
 }

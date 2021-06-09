@@ -11,12 +11,6 @@ module.exports = {
         // 将请求头的Host更改为target URL
         changeOrigin: true,
       },
-      "/api/": {
-        // 目标 API 地址
-        target: "http://localhost:8080",
-        // 将请求头的Host更改为target URL
-        changeOrigin: true,
-      },
     },
   },
   // 生产环境配置
